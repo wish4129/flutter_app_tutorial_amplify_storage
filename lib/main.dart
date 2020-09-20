@@ -1,10 +1,19 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_tutorial_amplify_storage/amplifyconfiguration.dart';
+import 'package:amplify_core/amplify_core.dart';
+import 'package:flutter_app_tutorial_amplify_storage/signup.dart';
+import 'package:flutter_app_tutorial_amplify_storage/singin.dart';
+import 'package:flutter_login/flutter_login.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'amplifyconfiguration.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    home: MyApp(),
+    routes: {
+      '/secondpage': (_) => SignupPage(),
+    },
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -14,7 +23,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _amplifyConfigured = false;
+  Duration get loginTime => Duration(milliseconds: 2250);
+  bool _isSignin = false;
+  String email;
+  // Instantiate Amplify
   Amplify amplifyInstance = Amplify();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -40,61 +55,61 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Amplify Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Amplify Demo Home Page'),
+  Future<String> _signupUser(LoginData data) async {
+    Map<String, dynamic> userAttributes = {
+      'email': emailController.text,
+    };
+    SignUpResult res = await Amplify.Auth.signUp(
+        username: data.name,
+        password: data.password,
+        options: CognitoSignUpOptions(userAttributes: userAttributes));
+    print(res);
+    if (res.isSignUpComplete) {
+      Fluttertoast.showToast(
+          toastLength: Toast.LENGTH_SHORT,
+          msg: 'Signup successfully!',
+          backgroundColor: Colors.blue,
+          textColor: Colors.white);
+      return null;
+    }
+    return 'error';
+  }
+
+  Future<String> _authUser(LoginData data) async {
+    SignInResult res = await Amplify.Auth.signIn(
+      username: data.name,
+      password: data.password,
+    );
+    if (res.isSignedIn) {
+      _isSignin = true;
+      email = data.name;
+      return null;
+    }
+    return 'error';
+  }
+
+  void _gotoSecondPage() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (_) => _isSignin
+              ? SigninPage(
+                  email: email,
+                )
+              : SignupPage()),
     );
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+    return SafeArea(
+      child: FlutterLogin(
+        title: 'POSEIDON',
+        logo: 'assets/poseidon.jpg',
+        onLogin: _authUser,
+        onSignup: _signupUser,
+        onSubmitAnimationCompleted: _gotoSecondPage,
+        onRecoverPassword: (_) => null,
       ),
     );
   }

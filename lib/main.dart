@@ -1,8 +1,9 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter_app_tutorial_amplify_storage/signup.dart';
-import 'package:flutter_app_tutorial_amplify_storage/singin.dart';
+import 'package:flutter_app_tutorial_amplify_storage/signin.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'amplifyconfiguration.dart';
@@ -41,8 +42,9 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-    amplifyInstance.addPlugin(authPlugins: [authPlugin]);
-
+    AmplifyStorageS3 storage = AmplifyStorageS3();
+    amplifyInstance
+        .addPlugin(authPlugins: [authPlugin], storagePlugins: [storage]);
     // Once Plugins are added, configure Amplify
     await amplifyInstance.configure(amplifyconfig);
     try {

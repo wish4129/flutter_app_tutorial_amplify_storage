@@ -1,7 +1,7 @@
 # This is a generated file; do not edit or check into version control.
-amplify_auth_cognito=C:\\Apps\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\amplify_auth_cognito-0.0.1-dev.2\\
-amplify_core=C:\\Apps\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\amplify_core-0.0.1-dev.2\\
-amplify_storage_s3=C:\\Apps\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\amplify_storage_s3-0.0.1-dev.2\\
-flutter_plugin_android_lifecycle=C:\\Apps\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_plugin_android_lifecycle-1.0.9\\
-fluttertoast=C:\\Apps\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\fluttertoast-4.0.1\\
-image_picker=C:\\Apps\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\image_picker-0.6.7+9\\
+amplify_auth_cognito=C:\\Program\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\amplify_auth_cognito-0.0.1-dev.2\\
+amplify_core=C:\\Program\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\amplify_core-0.0.1-dev.2\\
+amplify_storage_s3=C:\\Program\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\amplify_storage_s3-0.0.1-dev.2\\
+flutter_plugin_android_lifecycle=C:\\Program\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_plugin_android_lifecycle-1.0.9\\
+fluttertoast=C:\\Program\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\fluttertoast-4.0.1\\
+image_picker=C:\\Program\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\image_picker-0.6.7+9\\
